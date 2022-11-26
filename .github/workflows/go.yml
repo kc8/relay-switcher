@@ -29,4 +29,4 @@ jobs:
         go-version: 1.18
 
     - name: deploy
-      run: ./script/deploy.sh
+      run: ./scripts/deploy.sh
