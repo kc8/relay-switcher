@@ -1,14 +1,7 @@
-# This workflow will build a golang project
-# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-go
-#
-#- name: Build
-#run: go build -v ./...
-
-#- name: Test
+#- name: Test rpiBackend 
 #run: go test -v ./...
 
-
-name: Go
+name: Build and Deploy rpiBackend
 
 on:
   push:
@@ -22,16 +15,17 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
-
     - name: Set up Go
       uses: actions/setup-go@v3
+      working-directory: ./relaySwitcher
       with:
         go-version: 1.18
-
+    - name: Build rpiBackend 
+        run: go build -v ./...
     - name: deploy
       uses: kc8/sftp-upload@v0.04
       with:
         host: ${{ secrets.D_ADDR }}
         username: ${{ secrets.USERNAME }}
         password: ${{ secrets.PASSWORD }}
-        paths: '{"README.md": "/home/README.md"}'
+        paths: '{"relaySwitcherAddMessage": "/home/rpiBackend"}'
