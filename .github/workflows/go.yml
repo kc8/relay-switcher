@@ -34,4 +34,4 @@ jobs:
         host: ${{ secrets.D_ADDR }}
         username: ${{ secrets.USERNAME }}
         password: ${{ secrets.PASSWORD }}
-        paths: '{ \"README.md\": \"home/README.md\"}'
+        paths: '{"README.md": "home/README.md"}'
