@@ -28,4 +28,4 @@ jobs:
         host: ${{ secrets.D_ADDR }}
         username: ${{ secrets.USERNAME }}
         password: ${{ secrets.PASSWORD }}
-        paths: '{"relaySwitcherAddMessage": "/home/rpiBackend"}'
+        paths: '{"./relaySwitcher/relaySwitcherAddMessage": "/home/rpiBackend"}'
