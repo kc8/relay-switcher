@@ -1,0 +1,10 @@
+[Unit]
+Description=RPi Relay Server
+After=network.target
+
+[Service]
+ExecStart=/home/relayServer
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
