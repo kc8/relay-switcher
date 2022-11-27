@@ -19,9 +19,9 @@ jobs:
       uses: actions/setup-go@v3
       with:
         go-version: 1.18
-    - name: Build rpiBackend 
+    - name: Build rpiBackend
+      run: go build -v ./...
       working-directory: ./relaySwitcher
-        run: go build -v ./...
     - name: deploy
       uses: kc8/sftp-upload@v0.04
       with:
