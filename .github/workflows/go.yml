@@ -30,7 +30,7 @@ jobs:
 
     - name: deploy
       uses: kc8/sftp-upload@v0.01
-      wtih:
+      with:
         host: ${{ secrets.D_ADDR }}
         username: ${{ secrets.USERNAME }}
         password: ${{ secrets.PASSWORD }}
