@@ -29,4 +29,9 @@ jobs:
         go-version: 1.18
 
     - name: deploy
-      run: ./scripts/deploy.sh
+      uses: kc8/sftp-upload
+      wtih:
+        host: ${{ secrets.D_ADDR }}
+        username: ${{ secrets.USERNAME }}
+        password: ${{ secrets.PASSWORD }}
+        paths: "{README.md: home/README.md,  }"
