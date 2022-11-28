@@ -1,5 +1,3 @@
-#- name: Test rpiBackend 
-#run: go test -v ./...
 
 name: Build and Deploy rpiBackend
 
@@ -19,6 +17,8 @@ jobs:
       uses: actions/setup-go@v3
       with:
         go-version: 1.18
+    - name: Test rpiBackend 
+      run: go test -v ./...
     - name: Build rpiBackend
       run: go build -v ./...
       working-directory: ./relaySwitcher
