@@ -19,6 +19,7 @@ jobs:
         go-version: 1.18
     - name: Test rpiBackend 
       run: go test -v ./...
+      working-directory: ./relaySwitcher
     - name: Build rpiBackend
       run: go build -v ./...
       working-directory: ./relaySwitcher
