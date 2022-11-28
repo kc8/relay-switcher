@@ -22,6 +22,7 @@ require (
 require (
 	github.com/gin-gonic/gin v1.8.1
 	github.com/google/go-cmp v0.5.8 // indirect
+	github.com/google/uuid v1.3.0
 	golang.org/x/net v0.0.0-20220909164309-bea034e7d591 // indirect
 	golang.org/x/sys v0.0.0-20220728004956-3c1f35247d10 // indirect
 	golang.org/x/text v0.3.7 // indirect
