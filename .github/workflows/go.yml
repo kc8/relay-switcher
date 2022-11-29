@@ -23,6 +23,9 @@ jobs:
     - name: Build rpiBackend
       run: go build -v ./...
       working-directory: ./relaySwitcher
+    - name: chmod on switcher
+      run: chmod +x ./relaySwitcherAddMessage 
+      working-directory: ./relaySwitcher
     - name: deploy
       uses: kc8/sftp-upload@v0.04
       with:
