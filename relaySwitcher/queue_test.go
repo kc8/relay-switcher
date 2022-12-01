@@ -53,7 +53,6 @@ func TestQueueAddRemove(t *testing.T) {
     if (one != 1) {
         t.Errorf("q.Deque got %d instead of %d", one, 1)
     }
-    q.ToString()
     q.Enqueue(4)
     q.Enqueue(5)
 
@@ -63,7 +62,36 @@ func TestQueueAddRemove(t *testing.T) {
     }
 
     three := q.Deque()
+    four := q.Deque()
     if (three != 3) {
         t.Errorf("q.Deque got %d instead of %d", three, 3)
+    }
+
+    if (four != 4) {
+        t.Errorf("q.Deque got %d instead of %d", four, 4)
+    }
+}
+
+func TestMesageStruct(t* testing.T) {
+    var q *Queue = New()
+    q.Enqueue(0)
+    q.Enqueue(1)
+    q.Enqueue(2)
+
+    var zero = q.Deque()
+    if (zero != 0) {
+        t.Errorf("q.Deque got %d instead of %d", zero, 0)
+    }
+
+    q.Enqueue(3)
+    // --------------
+    q.Enqueue(4)
+    q.Enqueue(5)
+    q.Enqueue(6)
+    var one = q.Deque()
+
+    q.Enqueue(7)
+    if (one != 1) {
+        t.Errorf("q.Deque got %d instead of %d", one, 1)
     }
 }
