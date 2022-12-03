@@ -1,6 +1,6 @@
 
 class Logger:
-    def log(self, string: str) -> None:
-        print(string)
+    def log(self, prompt) -> None:
+        print(prompt)
 
 

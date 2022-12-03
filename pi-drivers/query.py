@@ -1,13 +1,12 @@
 import requests
-import json
 from requests import HTTPError
 import logger
 
 class Query:
 
     def __init__(self):
-        #self.base = 'http://pi.cooperkyle.com'
-        self.base = 'http://localhost:8080'
+        self.base = 'http://pi.cooperkyle.com'
+        #self.base = 'http://localhost:8080'
 
     def get(self, path: str) -> dict:
         """
@@ -42,25 +41,19 @@ class MessageHandler:
         self.query = Query();
         self.logger = logger
 
-    def getRelayStatus(self) -> bool:
+    def getRelayStatus(self) -> dict:
         rawResp = self.query.get("/rpiStatus")
-        if rawResp['valid'] == True and rawResp['status']== True:
-            return True
-        return False
+        result = {}
+        self.logger.log(rawResp)
+        if rawResp['valid'] == True:
+            result = {"valid": rawResp['valid'], "status": rawResp['status']}
+            return result
+        result = {"valid": False}
+        return result
 
     def setRelayStatus(self, status: bool) -> bool:
         payload  = {"msgId": "one", "status":status, "rpiId": "0"}
         rawResp = self.query.post("/setStatus", payload)
-        self.logger.log(rawResp)
         if rawResp['MessageId'] != None and rawResp['Received Status'] == status:
             return True
         return False
-
-
-logger = logger.Logger()
-q = MessageHandler(logger)
-q.setRelayStatus(True)
-q.setRelayStatus(True)
-q.setRelayStatus(True)
-print(q.getRelayStatus())
-q.setRelayStatus(True)
