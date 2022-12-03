@@ -69,7 +69,13 @@ func (q* Queue) resize() (int, error) {
         tempNodes := make([]interface{}, newSize)
         //TODO we could try built in copy w/ array splicing
         for j := 0; j < q.size; j++ {
-            tempNodes[j] = q.nodes[q.head + j % q.size];
+            // var pos int = q.head + j % q.size
+            // fmt.Printf("pos %d, j %d, head %d, size %d, newsize %d\n" ,pos, j, q.head, q.size, newSize)
+            if (q.head == 0) {
+                tempNodes[j] = q.nodes[q.head + j % q.size];
+            } else {
+                tempNodes[j] = q.nodes[q.head % q.size];
+            }
         }
         q.size = newSize
         q.head = 0
