@@ -1,0 +1,10 @@
+[Unit]
+Description=pi-relay-service
+After=network.target
+
+[Service]
+ExecStart=/home/pi/relay-switcher/pi-drivers/main.py
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
