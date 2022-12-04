@@ -6,6 +6,8 @@ import (
 	"fmt"
 	"io/ioutil"
 	"net/http"
+	"os"
+	"strconv"
 	"time"
 )
 
@@ -25,10 +27,8 @@ func isBetween(val int, min int, max int) bool {
     }
 }
 
-func shouldTurnOff() bool {
+func shouldTurnOff(onHour int, offHour int) bool {
     loc, _ := time.LoadLocation("America/New_York")
-    var onHour = 16
-    var offHour = 22
     var currentTime = time.Now().In(loc)
     var currentHour int = currentTime.Hour()
     var currentMinute int = currentTime.Minute()
@@ -47,7 +47,9 @@ func shouldTurnOff() bool {
 }
 
 func Main() {
-    var status = shouldTurnOff() 
+    var onHour, _ = strconv.ParseInt(os.Getenv("ONHOUR"), 0, 32)
+    var offHour, _ = strconv.ParseInt(os.Getenv("OFFHOUR"), 0, 32)
+    var status = shouldTurnOff(int(onHour), int(offHour))
     fmt.Printf("setting status %v\n", status)
     postBody, _ := json.Marshal(Message{
         MsgId: "new",

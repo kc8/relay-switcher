@@ -9,5 +9,8 @@ packages:
         main: '' 
         runtime: 'go:default'
         parameters: {}
-        environment: {}
+        environment: 
+          ONHOUR: "16"
+          OFFHOUR: "23"
+
 
