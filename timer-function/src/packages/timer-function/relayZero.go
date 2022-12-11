@@ -49,6 +49,8 @@ func shouldTurnOff(onHour int, offHour int) bool {
 func Main() {
     var onHour, _ = strconv.ParseInt(os.Getenv("ONHOUR"), 0, 32)
     var offHour, _ = strconv.ParseInt(os.Getenv("OFFHOUR"), 0, 32)
+    var endpoint = os.Getenv("QEDNPOINT")
+
     var status = shouldTurnOff(int(onHour), int(offHour))
     fmt.Printf("setting status %v\n", status)
     postBody, _ := json.Marshal(Message{
@@ -57,7 +59,7 @@ func Main() {
         Status: status,
     })
     postBodyBuffer := bytes.NewBuffer(postBody) 
-    post , err := http.Post("http://pi.cooperkyle.com/setStatus", "application/json", postBodyBuffer) 
+    post , err := http.Post(endpoint, "application/json", postBodyBuffer) 
     if err != nil {
         fmt.Printf("Failed to post request to http server  %v\n", err)
     }
