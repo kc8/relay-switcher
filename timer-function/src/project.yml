@@ -13,5 +13,4 @@ packages:
           ONHOUR: "16"
           OFFHOUR: "23"
           QEDNPOINT: "http://pi.cooperkyle.com/setStatus"
-
-
+          RPIID: "0"
