@@ -29,9 +29,6 @@ class pin:
         return self.state
 
     def determineState(self, status: bool) -> None:
-        """
-        Pass in the state yuo want this should set the state
-        """
         if status == False and self.getState() == True:
             self.off()
             print("OFF")
