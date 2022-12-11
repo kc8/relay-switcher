@@ -1,0 +1,16 @@
+parameters: {}
+environment: {}
+packages:
+  - name: timer-function
+    parameters: {}
+    environment: {}
+    actions:
+      - name: relayZero
+        main: '' 
+        runtime: 'go:default'
+        parameters: {}
+        environment: 
+          ONHOUR: "16"
+          OFFHOUR: "23"
+          QEDNPOINT: "http://pi.cooperkyle.com/setStatus"
+          RPIID: "0"
