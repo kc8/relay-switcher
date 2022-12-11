@@ -50,7 +50,7 @@ func Main() {
     var onHour, _ = strconv.ParseInt(os.Getenv("ONHOUR"), 0, 32)
     var offHour, _ = strconv.ParseInt(os.Getenv("OFFHOUR"), 0, 32)
     var endpoint = os.Getenv("QEDNPOINT")
-    var rpiId = os.Getenv("QEDNPOINT")
+    var rpiId = os.Getenv("RPIID")
 
     var status = shouldTurnOff(int(onHour), int(offHour))
     fmt.Printf("setting status %v\n", status)
