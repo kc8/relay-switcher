@@ -9,6 +9,7 @@ class pin:
         self.state = initial_state
         GPIO.setmode(GPIO.BCM)
         GPIO.setup(pin_num, GPIO.OUT)
+        self.off()
 
     def toggle_state(self) -> None:
         if self.state == False:
@@ -18,22 +19,21 @@ class pin:
 
     def on(self) -> None:
         self.state = True
-        GPIO.output(self.pin_num, 1)
+        GPIO.output(self.pin_num, 0)
 
     def off(self) -> None:
         self.state = False
-        GPIO.output(self.pin_num, 0)
+        GPIO.output(self.pin_num, 1)
 
     def getState(self) -> bool:
         return self.state
 
     def determineState(self, status: bool) -> None:
-        """
-        Pass in the state yuo want this should set the state
-        """
         if status == False and self.getState() == True:
             self.off()
+            print("OFF")
         elif status == True and self.getState() == False:
+            print("ON")
             self.on()
 
     def cleanup(self) -> None:
