@@ -14,8 +14,6 @@ def main(args: list[str]):
     while(True):
         try:
             status = q.getRelayStatus()
-            l.log("status")
-            l.log(status)
             if status != None and status['valid'] == True:
                 status = status['status']
                 relayPin.determineState(status)
