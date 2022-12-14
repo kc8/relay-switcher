@@ -7,9 +7,9 @@ class pin:
     def __init__(self, pin_num, initial_state):
         self.pin_num = pin_num
         self.state = initial_state
+        GPIO.cleanup(pin_num)
         GPIO.setmode(GPIO.BCM)
         GPIO.setup(pin_num, GPIO.OUT)
-        GPIO.cleanup(pin_num)
         self.off()
 
     def _configure_initial_state(self) -> None:
