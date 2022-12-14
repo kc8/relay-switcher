@@ -12,8 +12,9 @@ def setup(pn, gpio_type):
 def setmode(gpio_type):
     print(f'recevied set mode {gpio_type}')
 
-
-def cleanup():
+def cleanup(pn=None):
     print("gpio clean up called")
 
+def input(pn) -> int:
+    return 1
 
