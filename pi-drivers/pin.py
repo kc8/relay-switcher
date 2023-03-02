@@ -7,9 +7,21 @@ class pin:
     def __init__(self, pin_num, initial_state):
         self.pin_num = pin_num
         self.state = initial_state
+        GPIO.cleanup(pin_num)
         GPIO.setmode(GPIO.BCM)
         GPIO.setup(pin_num, GPIO.OUT)
         self.off()
+
+    def _configure_initial_state(self) -> None:
+        """
+        TODO we want to reset the inital state (or determine what stat
+        we are on when booting incase the script crashes)
+        """
+        currentPinState = GPIO.input(self.pin_num)
+        if currentPinState == 1:
+            self.off()
+        elif currentPinState == 0:
+            self.on()
 
     def toggle_state(self) -> None:
         if self.state == False:
@@ -31,9 +43,7 @@ class pin:
     def determineState(self, status: bool) -> None:
         if status == False and self.getState() == True:
             self.off()
-            print("OFF")
         elif status == True and self.getState() == False:
-            print("ON")
             self.on()
 
     def cleanup(self) -> None:
