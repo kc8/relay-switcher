@@ -1,12 +1,21 @@
 import requests
 from requests import HTTPError
 import logger
+import os
+
+class BadEnvException(Exception): 
+    def __init__(self, message):
+        self.message = message
+        super().__init__(self.message)
 
 class Query:
-
     def __init__(self):
-        self.base = 'http://pi.cooperkyle.com'
-        #self.base = 'http://localhost:8080'
+        PI_RELAY_SERVER_RESOURCE = "PI_RELAY_SERVER_RESOURCE"
+        uri = os.environ.get(PI_RELAY_SERVER_RESOURCE)
+        if uri is not None:
+            self.base = uri
+        else: 
+            raise BadEnvException(f'Env variable {PI_RELAY_SERVER_RESOURCE} is not defined') 
 
     def get(self, path: str) -> dict:
         """
@@ -24,15 +33,13 @@ class Query:
 
     def post(self, path: str, payload: dict) -> dict:
         """
-        Query an pi with requetst module
+        Query the pi
         """
         url = self.base + path
         try:
             r = requests.post(url, json=payload)
             result = r.json()
-        except HTTPError as e:
-            raise e
-        except ValueError as e :
+        except Exception as e:
             raise e
         return result
 

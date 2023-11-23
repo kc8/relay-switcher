@@ -3,7 +3,7 @@ Description=RPi Relay Server
 After=network.target
 
 [Service]
-ExecStart=/home/relayServer
+ExecStart=/usr/local/bin/relaySwitcher
 Restart=always
 
 [Install]
