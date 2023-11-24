@@ -5,8 +5,6 @@ import (
 	"fmt"
 )
 
-// Implementation with be an array of nodes using circular buffer
-// Insert at the tail, return at the head
 type Queue struct { 
     nodes []interface{}
     head int 

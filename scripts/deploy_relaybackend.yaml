@@ -1,0 +1,37 @@
+---
+- name: Upload Relay Server to Host
+  hosts: 
+    - server
+  become: yes
+
+  tasks:
+    - name: Copy Relay Server binary to host
+      copy:
+        src: ../relaySwitcher/dist/relaySwitcher
+        dest: /usr/local/bin/relaySwitcher
+    - name: Make executable
+      command: "chmod +x /usr/local/bin/relaySwitcher"
+- name: Update service file
+  hosts: 
+    - server
+  become: yes
+
+  tasks:
+    - name: Copy Relay Server Serivce to host
+      copy:
+        src: ../scripts/relay-server.service
+        dest: /etc/systemd/system/relay-server.service
+- name: Restart RelayBackend
+  hosts: 
+    - server
+  become: yes
+
+  tasks:
+    - name: daemon reload
+      command: "sudo systemctl daemon-reload"
+
+    - name: daemon enable 
+      command: "sudo systemctl enable relay-server.service"
+
+    - name: daemon start
+      command: "sudo systemctl restart relay-server.service"

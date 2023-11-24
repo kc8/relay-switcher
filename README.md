@@ -1,13 +1,25 @@
 # Relay Switcher
+This is designed to turn on and off the outside (and maybe other Christmas lights) that 
+are wired to a raspberry pi
 
-This is really just used as an off and on switch, hence the relay. 
+As of 2023, this is now a self hosted solution. 
 
-## A diagram:
+# pi-drivers
+This is the driver that directly control GPIO ports on the raspberry pi turnning them on and off
 
-**TODO**
+The python program also queries the RelaySwticher back end to 1. update 
+the current status of the lights it controls 2. turn on and off the lights it 
+controls
+
+# RelaySwitcher 
+This directory holds the backend server written in Go that updates and 
+shutdowns the pis. It a message queue that can maintain and update the state of multiple
+raspberry pis. It has really only worked with one thus far
+
+## Notes for future me
 
 The goal here is to subscribe to a message queue so the relay switcher running on the 
-raspberry pi. Each command should have some generic strcuture like the following:
+raspberry pi. Each command should have some generic structure like the following:
 
 
 ```json
@@ -25,19 +37,25 @@ raspberry pi. Each command should have some generic strcuture like the following
 }
 ```
 
-## The Architecture
-This does not use any formal pub/sub or message queue, which would be best so if you are looking for this. This might not 
-be the answer for you. 
-
-Instead we store our messages in a firestore database (or other document dat store). A function handler sits there listening for 
-messages to add into the queue (or maybe pop off the queue). 
-
-Another function is the function the rapsberry pi reads from, this will get all the messages in the store. Sort them, and 
-then take the top one of the 'stack'. This can be determined by the date time
-
 ## Message tie breakers
 This can be determined by a priority number set in the meta data block. Otherwise we will just execute them both without any gaurentee
 
+# Deploying 
+Everything is deploying via ssh and ansible playbook. Check the /scripts directory for a 
+systemd service script as well an ansible deploy script for the back end
 
-## Authentication to the endpoint 
-Currently we do not have any as there is not really any sensitive data
+You will need ansible playbook installed and a debian based server installed that you can use systemd on to 
+start the service
+
+## Relayswitcher
+1. Setup a file in `scripts/ansible_settings.ini` containing the host and other info for ansible to 
+get access to the back end server  example:
+    ```ini
+    [hosts]
+    server ansible_host=unkubbedservices.cooperkyle.com
+    server ansible_ssh_user=sslisbetter
+    server ansible_ssh_pass=sslisbetter
+    server ansible_sudo_pass=sslisbetter
+    ```
+1. Run the make file from the relaySwitcher directory with `make deploy`
+

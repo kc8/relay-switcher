@@ -3,18 +3,16 @@ from requests import HTTPError
 import logger
 
 class Query:
+    def __init__(self, serverAddr):
+        self.base = serverAddr
 
-    def __init__(self):
-        self.base = 'http://pi.cooperkyle.com'
-        #self.base = 'http://localhost:8080'
-
-    def get(self, path: str) -> dict:
+    def get(self, path: str, params: dict) -> dict:
         """
         Query an pi with requetst module
         """
         url = self.base + path
         try:
-            r = requests.get(url)
+            r = requests.get(url, params=params)
             result = r.json()
         except HTTPError as e:
             raise e
@@ -24,25 +22,25 @@ class Query:
 
     def post(self, path: str, payload: dict) -> dict:
         """
-        Query an pi with requetst module
+        Query the pi
         """
         url = self.base + path
         try:
             r = requests.post(url, json=payload)
             result = r.json()
-        except HTTPError as e:
-            raise e
-        except ValueError as e :
+        except Exception as e:
             raise e
         return result
 
 class MessageHandler:
-    def __init__(self, logger: logger.Logger):
-        self.query = Query();
+    def __init__(self, rpiId, serverAddr, logger: logger.Logger):
+        self.query = Query(serverAddr);
         self.logger = logger
+        self.rpiId = rpiId
 
     def getRelayStatus(self) -> dict:
-        rawResp = self.query.get("/rpiStatus")
+        params = {'rpiId': self.rpiId}
+        rawResp = self.query.get("/rpiStatus", params)
         result = {}
         self.logger.log(rawResp)
         if rawResp['valid'] == True:
@@ -52,8 +50,13 @@ class MessageHandler:
         return result
 
     def setRelayStatus(self, status: bool) -> bool:
-        payload  = {"msgId": "one", "status":status, "rpiId": "0"}
+        payload  = {"msgId": "one", "status": status, "rpiId": self.rpiId}
         rawResp = self.query.post("/setStatus", payload)
         if rawResp['MessageId'] != None and rawResp['Received Status'] == status:
             return True
         return False
+
+    def initBackendWithId(self): 
+        params = {'rpiId': self.rpiId}
+        ## TODO we are ignoring resps from here... currently we do not return anything helpful
+        self.query.get("/init", params)
