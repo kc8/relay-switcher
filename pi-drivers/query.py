@@ -55,3 +55,8 @@ class MessageHandler:
         if rawResp['MessageId'] != None and rawResp['Received Status'] == status:
             return True
         return False
+
+    def initBackendWithId(self): 
+        params = {'rpiId': self.rpiId}
+        ## TODO we are ignoring resps from here... currently we do not return anything helpful
+        self.query.get("/init", params)

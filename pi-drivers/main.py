@@ -26,7 +26,14 @@ def main(args: list[str]):
     if rpiId is None:
         raise BadEnvException(f'Env variable {RPI_ID} is not set') 
 
+    print(serverAddr)
+    print(rpiId)
     q = query.MessageHandler(rpiId, serverAddr, log) 
+    try:
+        q.initBackendWithId()
+    except Exception as err:
+        log.log("Falied to init server")
+        log.log(err)
 
     relayPin = pin.pin(14, False, log)
 

@@ -1,7 +1,7 @@
 default: build
 
 test: 
-	go test -timeout 5m $$(go list ./... | grep -v test-fixtures | grep -v stub-generator | grep -v integrationtest)
+	go test ./...
 
 build:
 	mkdir -p dist

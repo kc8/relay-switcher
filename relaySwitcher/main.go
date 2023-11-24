@@ -14,8 +14,8 @@ type Services struct {
 	piMessageSerivces map[string]RpiConfigContainer
 }
 
-func InitServices() *Services {
-	result := &Services{}
+func InitServices() Services {
+	result := Services{}
 	result.piMessageSerivces = make(map[string]RpiConfigContainer)
 	return result
 }
@@ -86,6 +86,7 @@ func (s *Services) getNextMessage(gc *gin.Context) {
 	if hasKey == false {
 		resp := gin.H{"{Failure_Reason": fmt.Sprintf("Invalid or unknow RpiId %s}", rpiId)}
 		gc.JSON(http.StatusBadRequest, resp)
+        return 
 	}
 	var msg Message = validRpiId.MessageService.Get()
 	gc.IndentedJSON(http.StatusOK, msg)
@@ -127,7 +128,7 @@ func (s* Services) landing(gc *gin.Context) {
 func main() {
 	router := gin.Default()
 
-	services := new(Services)
+	services := InitServices()
 	router.GET("/status", services.getServerStatus)
 	router.POST("/setStatus", services.postSetStatus)
 	router.GET("/initRpi", services.initRpiMessageService)
