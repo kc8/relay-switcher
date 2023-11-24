@@ -4,6 +4,7 @@ After=network.target
 
 [Service]
 Environment="PI_RELAY_SERVER_RESOURCE=http://pi.cooperkyle.com"
+Environment="RPI_ID=00"
 ExecStart=/home/pi/relay-switcher/pi-drivers/main.py
 Restart=always
 

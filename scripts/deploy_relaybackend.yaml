@@ -34,5 +34,4 @@
       command: "sudo systemctl enable relay-server.service"
 
     - name: daemon start
-      command: "sudo systemctl start etcd"
-      command: "sudo systemctl start relay-server.service"
+      command: "sudo systemctl restart relay-server.service"

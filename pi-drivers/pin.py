@@ -4,9 +4,10 @@ except:
     import Mock.GPIO as GPIO
 
 class pin:
-    def __init__(self, pin_num, initial_state):
+    def __init__(self, pin_num, initial_state, log):
         self.pin_num = pin_num
         self.state = initial_state
+        self.logger = log
         GPIO.cleanup(pin_num)
         GPIO.setmode(GPIO.BCM)
         GPIO.setup(pin_num, GPIO.OUT)
@@ -14,7 +15,7 @@ class pin:
 
     def _configure_initial_state(self) -> None:
         """
-        TODO we want to reset the inital state (or determine what stat
+        TODO we want to reset the initial state (or determine what state
         we are on when booting incase the script crashes)
         """
         currentPinState = GPIO.input(self.pin_num)

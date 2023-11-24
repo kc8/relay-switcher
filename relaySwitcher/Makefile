@@ -14,7 +14,7 @@ lint:
 clean:
 	rm -rf dist/
 
-deploy:
+deploy: default build
 	ansible-playbook -i ../scripts/ansible_settings.ini ../scripts/deploy_relaybackend.yaml
 
 .PHONY: prepare test build install e2e lint clean generate
