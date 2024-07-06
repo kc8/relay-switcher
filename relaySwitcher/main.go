@@ -137,5 +137,5 @@ func main() {
     // TODO a custom swagger like doc, but much more boring and simple
 	router.GET("/", services.landing)
 
-	router.Run("localhost:8080")
+	router.Run(":8080")
 }
