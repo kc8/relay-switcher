@@ -4,7 +4,7 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
-	"io/ioutil"
+    "io"
 	"net/http"
 	"os"
 	"strconv"
@@ -64,6 +64,15 @@ func Main() {
     if err != nil {
         fmt.Printf("Failed to post request to http server  %v\n", err)
     }
-    resp, err := ioutil.ReadAll(post.Body)
+    resp, err := io.ReadAll(post.Body)
     fmt.Printf("Response from server was %v\n", string(resp))
 }
+
+/*
+    {
+        "msgId": "",
+        "rpiId": "00",
+        "status": true,
+        "valid": true,
+    }
+*/
